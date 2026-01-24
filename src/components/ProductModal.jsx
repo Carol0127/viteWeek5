@@ -269,6 +269,7 @@ function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
                       value={tempData.origin_price || 0}
                       onChange={handleModalInputChange}
                       type="number"
+                      min="0"
                       className="form-control"
                     />
                   </div>
@@ -279,6 +280,7 @@ function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
                       value={tempData.price || 0}
                       onChange={handleModalInputChange}
                       type="number"
+                      min="0"
                       className="form-control"
                     />
                   </div>
