@@ -1,24 +1,31 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import Pagination from "../../components/Pagination";
 const env = import.meta.env;
 const { VITE_API_BASE, VITE_API_PATH } = env;
 
 function Products() {
   const [products, setProducts] = useState([]);
-
+  const [pagination, setPagination] = useState({});
+  // 使用 useCallback 定義函數
+  const getProducts = useCallback(async (page = 1) => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE}/api/${import.meta.env.VITE_API_PATH}/products?page=${page}`,
+      );
+      setProducts(res.data.products);
+      setPagination(res.data.pagination);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []); // 空陣列表示此函數在元件掛載期間不會改變
   useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const res = await axios.get(`${VITE_API_BASE}/api/${VITE_API_PATH}/products`);
-        setProducts(res.data.products);
-        console.log(res.data.products);
-      } catch (error) {
-        console.log(error);
-      }
+    const fetchData = async () => {
+      await getProducts();
     };
-    getProducts();
-  }, []);
+    fetchData();
+  }, [getProducts]);
 
   const addCart = async (product_id, qty = 1) => {
     const data = {
@@ -78,6 +85,10 @@ function Products() {
               </div>
             </div>
           ))}
+          <Pagination
+            pagination={pagination}
+            onChangePage={getProducts}
+          />
         </div>
       </div>
       ;
