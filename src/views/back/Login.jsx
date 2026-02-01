@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
-const API_BASE = "https://ec-course-api.hexschool.io/v2";
-const API_PATH = "yihan";
+const env = import.meta.env;
+const { VITE_API_BASE, VITE_API_PATH } = env;
 
 function Login({ setIsAuth, getProducts, setMessage, message }) {
   //登入格式
@@ -26,7 +26,7 @@ function Login({ setIsAuth, getProducts, setMessage, message }) {
   const signin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${API_BASE}/admin/signin`, formData);
+      const res = await axios.post(`${VITE_API_BASE}/admin/signin`, formData);
       // 取得 token 並存入 cookie
       const { token, expired } = res.data;
       document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;

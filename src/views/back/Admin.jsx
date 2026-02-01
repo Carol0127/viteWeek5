@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
-import ProductModal from "./components/ProductModal";
-import Pagination from "./components/Pagination";
-import DelProductModal from "./components/DelProductModal";
-import ProdectTable from "./components/ProductTable";
-import Login from "./views/Login";
+import ProductModal from "../../components/ProductModal";
+import Pagination from "../../components/Pagination";
+import DelProductModal from "../../components/DelProductModal";
+import ProdectTable from "../../components/ProductTable";
+import Login from "./Login";
 
-const API_BASE = "https://ec-course-api.hexschool.io/v2";
-const API_PATH = "yihan";
+const env = import.meta.env;
+const { VITE_API_BASE, VITE_API_PATH } = env;
 
-function App() {
+function Admin() {
   //錯誤訊息
   const [message, setMessage] = useState("");
 
@@ -21,7 +21,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const getProducts = async (page = 1) => {
     try {
-      const res = await axios.get(`${API_BASE}/api/${API_PATH}/admin/products?page=${page}`);
+      const res = await axios.get(`${VITE_API_BASE}/api/${VITE_API_PATH}/admin/products?page=${page}`);
       setProducts(res.data.products);
       setPagination(res.data.pagination);
     } catch (error) {
@@ -38,13 +38,14 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     // 取得 Cookie 裡的 Token
+    // eslint-disable-next-line
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 
     if (token) {
       axios.defaults.headers.common["Authorization"] = token;
       // 檢查登入 API
       axios
-        .post(`${API_BASE}/api/user/check`)
+        .post(`${VITE_API_BASE}/api/user/check`)
         .then(() => {
           setIsAuth(true); // 驗證成功，變回登入狀態
           getProducts();
@@ -201,4 +202,4 @@ function App() {
     </>
   );
 }
-export default App;
+export default Admin;

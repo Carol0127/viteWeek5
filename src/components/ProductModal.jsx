@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const API_BASE = "https://ec-course-api.hexschool.io/v2";
-const API_PATH = "yihan";
+const env = import.meta.env;
+const { VITE_API_BASE, VITE_API_PATH } = env;
 
 function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
   const [tempData, setTempData] = useState(modalData);
@@ -62,11 +62,12 @@ function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
     try {
       const formData = new FormData();
       formData.append("file-to-upload", file);
-      const res = await axios.post(`${API_BASE}/api/${API_PATH}/admin/upload`, formData);
+      const res = await axios.post(`${VITE_API_BASE}/api/${VITE_API_PATH}/admin/upload`, formData);
       setTempData((pre) => ({
         ...pre,
         imageUrl: res.data.imageUrl,
       }));
+      e.target.value = "";
     } catch (error) {
       console.log(error);
     }
@@ -78,8 +79,8 @@ function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
     //API 參數
     const method = isEdit ? "put" : "post";
     const url = isEdit
-      ? `${API_BASE}/api/${API_PATH}/admin/product/${tempData.id}`
-      : `${API_BASE}/api/${API_PATH}/admin/product`;
+      ? `${VITE_API_BASE}/api/${VITE_API_PATH}/admin/product/${tempData.id}`
+      : `${VITE_API_BASE}/api/${VITE_API_PATH}/admin/product`;
 
     const cleanedData = {
       ...tempData,
@@ -135,8 +136,14 @@ function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">主圖網址</label>
+                  <label
+                    htmlFor="firstImageUrl"
+                    className="form-label"
+                  >
+                    主圖網址
+                  </label>
                   <input
+                    id="firstImageUrl"
                     name="imageUrl"
                     value={tempData.imageUrl || ""}
                     onChange={handleModalInputChange}
@@ -161,8 +168,14 @@ function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
                     className="mb-3"
                     key={index}
                   >
-                    <label className="form-label">圖片網址 {index + 1}</label>
+                    <label
+                      htmlFor={index + 1}
+                      className="form-label"
+                    >
+                      圖片網址 {index + 1}
+                    </label>
                     <input
+                      id={index + 1}
                       name={`imagesUrl_${index}`}
                       value={url || ""}
                       onChange={handleModalInputChange}
@@ -210,8 +223,14 @@ function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
               </div>
               <div className="col-8">
                 <div className="mb-3">
-                  <label className="form-label">產品名稱</label>
+                  <label
+                    htmlFor="title"
+                    className="form-label"
+                  >
+                    產品名稱
+                  </label>
                   <input
+                    id="title"
                     name="title"
                     value={tempData.title || ""}
                     onChange={handleModalInputChange}
@@ -221,8 +240,14 @@ function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
                 </div>
                 <div className="row">
                   <div className="mb-3 col-6">
-                    <label className="form-label">分類</label>
+                    <label
+                      htmlFor="category"
+                      className="form-label"
+                    >
+                      分類
+                    </label>
                     <input
+                      id="category"
                       name="category"
                       value={tempData.category || ""}
                       onChange={handleModalInputChange}
@@ -231,8 +256,14 @@ function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
                     />
                   </div>
                   <div className="mb-3 col-6">
-                    <label className="form-label">單位</label>
+                    <label
+                      htmlFor="unit"
+                      className="form-label"
+                    >
+                      單位
+                    </label>
                     <input
+                      id="unit"
                       name="unit"
                       value={tempData.unit || ""}
                       onChange={handleModalInputChange}
@@ -242,8 +273,14 @@ function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
                   </div>
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">內容</label>
+                  <label
+                    htmlFor="content"
+                    className="form-label"
+                  >
+                    內容
+                  </label>
                   <textarea
+                    id="content"
                     name="content"
                     value={tempData.content || ""}
                     onChange={handleModalInputChange}
@@ -252,8 +289,14 @@ function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">描述</label>
+                  <label
+                    htmlFor="description"
+                    className="form-label"
+                  >
+                    描述
+                  </label>
                   <textarea
+                    id="description"
                     name="description"
                     value={tempData.description || ""}
                     onChange={handleModalInputChange}
@@ -263,8 +306,14 @@ function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
                 </div>
                 <div className="row">
                   <div className="mb-3 col-6">
-                    <label className="form-label">原價</label>
+                    <label
+                      htmlFor="origin_price"
+                      className="form-label"
+                    >
+                      原價
+                    </label>
                     <input
+                      id="origin_price"
                       name="origin_price"
                       value={tempData.origin_price || 0}
                       onChange={handleModalInputChange}
@@ -274,8 +323,14 @@ function ProductModal({ modalData, closeModal, getProducts, modalInstance }) {
                     />
                   </div>
                   <div className="mb-3 col-6">
-                    <label className="form-label">售價</label>
+                    <label
+                      htmlFor="price"
+                      className="form-label"
+                    >
+                      售價
+                    </label>
                     <input
+                      id="price"
                       name="price"
                       value={tempData.price || 0}
                       onChange={handleModalInputChange}

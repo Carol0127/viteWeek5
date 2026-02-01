@@ -1,14 +1,13 @@
 import axios from "axios";
 
-const API_BASE = "https://ec-course-api.hexschool.io/v2";
-const API_PATH = "yihan";
-
+const env = import.meta.env;
+const { VITE_API_BASE, VITE_API_PATH } = env;
 axios;
 function DelProductModal({ closeDelModal, getProducts, tempDelProduct }) {
   //刪除功能
   const delProduct = async () => {
     try {
-      await axios.delete(`${API_BASE}/api/${API_PATH}/admin/product/${tempDelProduct.id}`);
+      await axios.delete(`${VITE_API_BASE}/api/${VITE_API_PATH}/admin/product/${tempDelProduct.id}`);
       getProducts();
       closeDelModal();
     } catch (error) {

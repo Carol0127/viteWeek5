@@ -1,0 +1,19 @@
+/* src/style/all.scss */
+
+// 1. 必須最先載入：Bootstrap 的核心函式（包含 _assert-ascending 就在這裡面）
+@import "bootstrap/scss/functions";
+
+// 2. 載入你的自定義變數（注意：這裡會覆寫 Bootstrap 的預設值）
+// 如果你的檔案名是 _variables.scss，寫 "variables" 即可
+@import "variables";
+@import "variables-dark";
+
+// 3. 關鍵：直接載入完整的 Bootstrap 樣式
+// 它會自動依照正確順序跑完 variables, maps, mixins, utilities 等
+@import "bootstrap/scss/bootstrap";
+
+.hero-section {
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+}
