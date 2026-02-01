@@ -1,4 +1,4 @@
-import bittersweet from "../src/assets/酸甜告白";
+import bittersweet from "../src/assets/酸甜告白.jpg";
 function Home() {
   return (
     <div className="container-flulid">
