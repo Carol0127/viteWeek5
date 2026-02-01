@@ -10,7 +10,7 @@ function FrontendLayout() {
             to="/"
           >
             <img
-              src={`${import.meta.env.BASE_URL}images/logoSquare.jpg`}
+              src={`${import.meta.env.BASE_URL}/logoSquare.png`}
               style={{ width: "80px" }}
               alt="logo"
             />
