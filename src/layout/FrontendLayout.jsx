@@ -1,5 +1,5 @@
 import { Outlet, NavLink } from "react-router-dom";
-
+import logoSquare from "../assets/logo正.png";
 function FrontendLayout() {
   return (
     <>
@@ -11,7 +11,7 @@ function FrontendLayout() {
             to="/"
           >
             <img
-              src="./src/assets/logo正.png"
+              src={logoSquare}
               style={{ width: "80px" }}
               alt="logo"
             />
